@@ -1,0 +1,26 @@
+{
+  "task_id": "bench_eg_001",
+  "title": "贵州茅台估值与投资建议（示例）",
+  "prompt": "分析贵州茅台（600519）投资价值，给出估值与投资建议",
+  "golden": {
+    "expected_tools": [
+      "akshare:stock_individual_info_em",
+      "akshare:stock_financial_abstract",
+      "anysearch:茅台 研报"
+    ],
+    "key_figures": [
+      {"name": "PE_TTM", "value": 22.5, "tolerance": 0.05},
+      {"name": "ROE", "value": 30.0, "tolerance": 0.05}
+    ],
+    "required_derivation": ["证据", "计算", "结论"],
+    "required_source_anchor": true,
+    "expected_challenges_resolved": "all"
+  },
+  "scoring": {
+    "tool_correctness": 0.25,
+    "numeric_repro": 0.25,
+    "derivation": 0.20,
+    "source_trace": 0.20,
+    "adv_resolution": 0.10
+  }
+}
