@@ -1,0 +1,38 @@
+name: smoke
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: py_compile all scripts
+        run: python -m py_compile scripts/*.py
+      - name: validate SKILL.md frontmatter YAML
+        run: |
+          pip install pyyaml >/dev/null
+          python - <<'PY'
+          import yaml, pathlib
+          text = pathlib.Path('SKILL.md').read_text(encoding='utf-8')
+          assert text.startswith('---'), 'SKILL.md must start with YAML frontmatter'
+          end = text.index('\n---', 3)
+          data = yaml.safe_load(text[3:end])
+          assert 'name' in data and 'version' in data, 'frontmatter needs name+version'
+          print('SKILL.md frontmatter YAML OK, version =', data['version'])
+          PY
+      - name: ensure config.local.json is gitignored (privacy guard)
+        run: |
+          git check-ignore config.local.json && echo 'OK: config.local.json ignored' || { echo 'ERROR: config.local.json NOT ignored'; exit 1; }
+      - name: run Phase D1 fail-closed attack-suite
+        run: python tests/attack_suite.py
+      - name: run Phase D2 derivation-logic suite
+        run: python tests/derivation_suite.py
+      - name: run Phase D3 backtest no-lookahead + reproducibility suite
+        run: python tests/backtest_suite.py
