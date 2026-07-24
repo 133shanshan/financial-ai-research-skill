@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.pyo
+
+# 本地个人配置（含真实 vault 路径，禁止提交；仓库用 config.local.example.json 占位）
+config.local.json
+
+# 个人测试脚本（含写死的个人路径 / 案例数据，仅本地保留，不进仓库）
+scripts/test_backtest.py
+analyze_025856_with_skill.py
