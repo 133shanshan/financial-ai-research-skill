@@ -13,7 +13,7 @@
 
 ## 快速开始
 
-本 skill 为 WorkBuddy 用户级 skill，放入 `~/.workbuddy/skills/金融AI投研/` 即被自动匹配加载。
+本 skill 为 WorkBuddy 用户级 skill，放入 `~/.workbuddy/skills/financial-ai-research-skill/` 即被自动匹配加载。
 
 直接提问即可触发，例如：
 
@@ -33,7 +33,7 @@
 ## 安装
 
 ```bash
-git clone <your-repo-url> ~/.workbuddy/skills/金融AI投研
+git clone <your-repo-url> ~/.workbuddy/skills/financial-ai-research-skill
 ```
 
 ## 依赖（均优雅降级，缺失不崩）
@@ -64,7 +64,7 @@ cp config.local.example.json config.local.json
 ## 目录结构
 
 ```
-金融AI投研/
+financial-ai-research-skill/
 ├── SKILL.md                      # 入口与编排
 ├── references/                   # 方法论、分级、报告结构、agent 提示词
 │   ├── tiering.md                # T1/T2/T3 分级规范
