@@ -11,7 +11,7 @@ description: |
   行业/竞品/客户结构化研究、每日宏观数据监控推送、
   全球市场环境评估、个股/板块情绪扫描、公募基金/私募基金/ETF深度分析。
   输出格式：PDF（顶级券商研报标准）。v3.1.0 新增「可信层」：来源快照+字符锚定（provenance）、证据→计算→结论推导链、对抗性反方审计（adversarial-auditor）；v3.2.0 新增「自评估质量门」（quality-judge 三维度打分：定性严谨度/定量准确度/可验证性，不达标不送达）；v3.3.0 新增「流程韧性」（子代理/数据失败自动重试≤3次+错误恢复节点+降级矩阵，降级而非崩溃，报告第12章「流程韧性声明」标注曾触发重试/降级）；v3.4.0 新增「可执行推理」（Code Agent 统一变量空间执行 Python 计算/图表，定量主张须映射 variables.json，图表须视觉校验，替代 LLM 裸算，报告第13章「可执行推理与变量空间」交付，第六道 fail-closed 校验 check-code-agent.sh 拦截散文式计算）；v3.5.0 新增「经验沉淀」（每次研究后自动产出可复用知识卡片——避坑清单/标的研判模板/行业框架，写入 experience/ 并回灌下次研究，报告第14章「经验沉淀与复用」，第七道 fail-closed 校验 check-experience-deposition.sh 拦截空洞沉淀，对齐 Agentar 经验→Skills）；v3.6.0 新增「工具治理中心」（MCP 范式，把 AnySearch/AkShare/Bash/Code Agent 等所有外部调用统一收口到治理层做参数校验+调用审计 tool_audit/<task_id>/tool_calls.jsonl+可重现，对齐 AlphaTeam 工具治理中心，报告第15章「工具治理与调用审计」，第八道 fail-closed 校验 check-mcp-governance.sh 拦截未统一审计）；v3.7.0 新增「状态化多轮下钻」（同一会话下钻追问上下文累积不丢，LangGraph checkpoint 思路：session_state/<session_id>.json 持久化+checkpoint 恢复+复用已采 provenance/已算 variables 不重采不重算，报告第16章「多轮下钻与会话状态」，第九道 fail-closed 校验 check-stateful-drilldown.sh 拦截无状态会话）。交付前十三道 fail-closed 校验（provenance/推导链/反方审计/自评估质量门/流程韧性声明/可执行推理/经验沉淀/工具治理/多轮下钻/客观评测基准/自进化闭环/投决会对抗决策/非结构化知识回流），对接真实市场可审计、可重现、可累积、可追溯、可续接。v3.8.0 新增「客观评测基准」（内置 benchmark suite 五维度客观打分，对齐 FinToolBench/iRaB；与 quality-judge 主观自评估双轨并行，第十道 fail-closed 校验 check-evaluation-benchmark.sh 拦截未达标/未声明）。v3.9.0 新增「自进化闭环」（交付后汇总 G8/G5/G4/反方审计质量信号写入 evolution/signals/，提取候选 Skill 补丁受控发布+秒级回滚，对齐 Hermes 五阶段+蚂蚁受控发布；报告第18章「自进化反馈与改进建议」，第十一道 fail-closed 校验 check-self-evolution.sh 拦截未发射信号/未声明）。v3.10.0 新增「投决会对抗决策」（含投资建议的报告交付前跑五委员对抗决策——主持/看涨/看跌/中性/风控，强制交叉质询，形成 investment_committee/<delivery_id>.json 决议并强约束报告综合建议，对齐组织级投决会；报告第19章「投决会对抗决策与决议」，第十二道 fail-closed 校验 check-investment-committee.sh 拦截未跑对抗决策/未声明）。v3.11.0 新增「非结构化知识回流」（经 agent-mail 连接器摄取投研相关邮件——路演纪要/研报推送/客户与内部沟通/会议邀请附件，抽取可复用知识卡片写入 experience/ 并回灌下次研究；agent-mail 未开通/无匹配邮件则降级声明不阻塞，复用 G4 经验沉淀体系；报告第20章「非结构化知识回流」，第十三道 fail-closed 校验 check-knowledge-ingestion.sh 拦截未摄取/未声明）。
-  v3.12.0 新增「复杂度分级执行」（references/tiering.md）：按 T1 轻量/T2 标准/T3 完整 分档，仅控制是否拉起反方审计/投决会/benchmark/自进化/知识回流等昂贵 agent 流程，廉价结构校验照常，十三道 fail-closed 门槛不变。v3.12.1 把 G4→OB 经验同步通道升级为多源（对话/其他 skill/全局 self-improve 均可同步），零 LLM 增量去重。v3.13.0 深化省 token：②模块引用惰性加载（methodology 不再随 skill 加载全量注入，执行时按需 Read）③每章节 token 预算+紧模板 ④动态 agent 选择（按 tier+问题域裁剪并行 agent 数）⑤provenance 轻量锚定（T1/T2 仅存被引片段快照）⑥结果缓存复用（同标的/同域近期结论跨会话复用，不重跑 agent）；十三道 fail-closed 门槛一个不降，T3 完整档行为同 v3.12.1。  v3.14.0 去个人化与可移植（config 外置 gitignored，OB_VAULT 配置，详见 config.local.example.json）。v3.15.0 补齐发布工程（README / LICENSE / CI 烟雾测试）。v3.16.0 独立基准验证 D1（fail-closed 攻击召回率 6/6=100%，tests/attack_suite.py，接入 CI）。v3.17.0 独立基准验证 D2（推导链逻辑正确性攻击召回率 4/4=100%，tests/derivation_suite.py，内置 3 题已知答案题集供 LLM 判分，接入 CI）。
+  v3.12.0 新增「复杂度分级执行」（references/tiering.md）：按 T1 轻量/T2 标准/T3 完整 分档，仅控制是否拉起反方审计/投决会/benchmark/自进化/知识回流等昂贵 agent 流程，廉价结构校验照常，十三道 fail-closed 门槛不变。v3.12.1 把 G4→OB 经验同步通道升级为多源（对话/其他 skill/全局 self-improve 均可同步），零 LLM 增量去重。v3.13.0 深化省 token：②模块引用惰性加载（methodology 不再随 skill 加载全量注入，执行时按需 Read）③每章节 token 预算+紧模板 ④动态 agent 选择（按 tier+问题域裁剪并行 agent 数）⑤provenance 轻量锚定（T1/T2 仅存被引片段快照）⑥结果缓存复用（同标的/同域近期结论跨会话复用，不重跑 agent）；十三道 fail-closed 门槛一个不降，T3 完整档行为同 v3.12.1。  v3.14.0 去个人化与可移植（config 外置 gitignored，OB_VAULT 配置，详见 config.local.example.json）。v3.15.0 补齐发布工程（README / LICENSE / CI 烟雾测试）。v3.16.0 独立基准验证 D1（fail-closed 攻击召回率 6/6=100%，tests/attack_suite.py，接入 CI）。v3.17.0 独立基准验证 D2（推导链逻辑正确性攻击召回率 4/4=100%，tests/derivation_suite.py，内置 3 题已知答案题集供 LLM 判分，接入 CI）。 v3.18.0 独立基准验证 D3（禁未来函数+回测吻合度测试召回率 4/4=100%，tests/backtest_suite.py，接入 CI）。
 allowed-tools:
   - Read
   - Write
@@ -27,33 +27,11 @@ allowed-tools:
   - SendMessage
   - deliver_attachments
   - anysearch
-  - Agent
-  - TeamCreate
-  - TeamDelete
-  - TaskCreate
-  - TaskUpdate
-  - TaskList
-  - SendMessage
-  - deliver_attachments
-references:
-  - ${CLAUDE_SKILL_DIR}/references/akshare-api.md
-  - ${CLAUDE_SKILL_DIR}/references/agent-teams.md
-  - ${CLAUDE_SKILL_DIR}/references/knowledge-base-guide.md
-  - ${CLAUDE_SKILL_DIR}/references/common-errors.md
-  - ${CLAUDE_SKILL_DIR}/references/disclaimer-sources.md
-  - ${CLAUDE_SKILL_DIR}/references/indicators.md
-  - ${CLAUDE_SKILL_DIR}/references/report-structure.md
-  - ${CLAUDE_SKILL_DIR}/references/resilience.md
-  - ${CLAUDE_SKILL_DIR}/references/code-agent.md
-  - ${CLAUDE_SKILL_DIR}/references/experience-deposition.md
-  - ${CLAUDE_SKILL_DIR}/references/mcp-governance.md
-  - ${CLAUDE_SKILL_DIR}/references/stateful-drilldown.md
-  - ${CLAUDE_SKILL_DIR}/references/evaluation-benchmark.md
-  - ${CLAUDE_SKILL_DIR}/references/self-evolution.md
-  - ${CLAUDE_SKILL_DIR}/references/investment-committee.md
-  - ${CLAUDE_SKILL_DIR}/references/module-index.md  # 模块索引：methodology 改为按需 Read，不随 skill 加载全量注入
-  - ${CLAUDE_SKILL_DIR}/references/execution-rules.md
-  - ${CLAUDE_SKILL_DIR}/references/references-list.md
+# references are loaded lazily at runtime via {SKILL_ROOT}/... pointers in the body
+# and sub-documents (module-index.md etc.). WorkBuddy does NOT pre-inject the
+# `references:` frontmatter field, so listing them here only added dead metadata
+# and a fixed per-conversation token tax. Removed in P0-2 (2026-07-27) for max
+# token efficiency — every referenced file stays reachable via body {SKILL_ROOT} paths.
 ---
 
 ## 版本与版本管理（git）
@@ -390,5 +368,5 @@ generate_backtest_report(
 
 ---
 
-*本 Skill 为顶级 Agent Teams 架构设计，SKILL.md 为入口索引，详细内容存于 `${CLAUDE_SKILL_DIR}/references/` 目录。*
+*本 Skill 为顶级 Agent Teams 架构设计，SKILL.md 为入口索引，详细内容存于 `{SKILL_ROOT}/references/` 目录。*
 *完整参考资料列表：参见 `references/references-list.md`*
