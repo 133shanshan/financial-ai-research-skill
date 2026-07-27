@@ -1,5 +1,5 @@
 ---
-name: 金融AI投研
+name: financial-ai-research-skill
 version: 3.18.0
 description: |
   顶级金融AI投研 Agent Teams 框架（多智能体并行架构），整合九大模块：AI投资大师智能体（模块一）、
